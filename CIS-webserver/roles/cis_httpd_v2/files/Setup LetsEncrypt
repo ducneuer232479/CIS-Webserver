@@ -1,0 +1,8 @@
+# Step 3 — Obtaining a Certificate
+sudo certbot --apache -d vutuanduc.site -d www.vutuanduc.site
+
+# Step 4 — Setting Up Auto Renewal
+sudo certbot renew --dry-run
+
+# Step 5 - motify crontab file
+echo "0 0,12 * * * root python3 -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null

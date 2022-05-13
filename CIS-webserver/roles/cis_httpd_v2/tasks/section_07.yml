@@ -1,0 +1,12 @@
+---
+# 7. SSL/TLS Configuration
+#
+- include: section_07_level_1_and_2.yml
+  tags:
+    - section07
+    - level_1_and_2
+
+- include: section_07_level_2.yml
+  tags:
+    - section07
+    - level_2

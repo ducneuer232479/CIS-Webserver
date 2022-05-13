@@ -1,0 +1,45 @@
+---
+- name: 6.2. Ensure a Syslog Facility Is Configured for Error Logging
+  shell: echo 'ErrorLog "syslog:local1"' >> {{ apache_conf_dir }}/conf/httpd.conf >> Check/Check_a_Syslog_Facility_Is_Configured_for_Error_Logging.txt
+  tags:
+    - automated
+    - section06.2  
+
+- name: 6.6. Ensure ModSecurity Is Installed and Enabled
+  shell: |
+    yum clean all
+    yum install gcc make httpd-devel libxml2 pcre-devel libxml2-devel curl-devel git wget -y
+    wget https://www.modsecurity.org/tarball/2.9.3/modsecurity-2.9.3.tar.gz
+    tar -xzf modsecurity-2.9.3.tar.gz
+    cd modsecurity-2.9.3
+    ./configure
+    make install
+    cp modsecurity.conf-recommended /etc/httpd/conf.d/modsecurity.conf
+    cp unicode.mapping /etc/httpd/conf.d/
+    echo "LoadModule security2_module modules/mod_security2.so" >> /etc/httpd/conf/httpd.conf
+  tags:
+    - automated
+    - section06.6
+
+- name: 6.7. Ensure the OWASP ModSecurity Core Rule Set Is Installed and Enabled 
+  shell: |
+    cd /etc/httpd
+    git clone https://github.com/Thang1102/owasp-modsecurity-crs.git
+    mv owasp-modsecurity-crs modsecurity-crs
+    cd modsecurity-crs
+    mv crs-setup.conf.example crs-setup.conf
+    echo "
+    Include modsecurity-crs/crs-setup.conf
+    Include modsecurity-crs/rules/*.conf" >> /etc/httpd/conf/httpd.conf
+    sed -i 's/SecRuleEngine DetectionOnly/SecRuleEngine On/' //etc/httpd/conf.d/modsecurity.conf
+    mkdir /opt/log/
+    chcon --reference /var/log /opt/log/
+    sed -i "s#/var/log/#/opt/log/#g" //etc/httpd/conf.d/modsecurity.conf
+    cd /root
+    systemctl restart httpd
+    sed -i "s#/opt/log/#/var/log/#g" //etc/httpd/conf.d/modsecurity.conf
+    systemctl restart httpd
+    curl localhost/index.html?exec=/bin/bash >> Check/Check_the_OWASP_ModSecurity_Core_Rule_Set_Is_Installed_and_Enabled.txt 
+  tags:
+    - automated
+    - section06.7

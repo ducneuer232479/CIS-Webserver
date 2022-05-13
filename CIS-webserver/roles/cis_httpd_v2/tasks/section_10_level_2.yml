@@ -1,0 +1,36 @@
+---
+- name: 10.1. Ensure the LimitRequestLine directive is Set to 512 or less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^RequestReadTimeout"
+    line: 'LimitRequestline 512'
+  tags:
+    - automated
+    - section10.1
+
+- name: 10.2. Ensure the LimitRequestFields Directive is Set to 100 or Less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^LimitRequestline"
+    line: 'LimitRequestFields 100'
+  tags:
+    - automated
+    - section10.2
+
+- name: 10.3 Ensure the LimitRequestFieldsize Directive is Set to 1024 or Less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^LimitRequestFields"
+    line: 'LimitRequestFieldsize 1024'
+  tags:
+    - automated
+    - section10.3
+
+- name: 10.4 Ensure the LimitRequestBody Directive is Set to 102400 or Less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^LimitRequestFieldsize"
+    line: 'LimitRequestBody 102400'
+  tags:
+    - automated
+    - section10.4

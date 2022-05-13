@@ -1,0 +1,26 @@
+---
+- name: 7.10. Ensure OCSP Stapling Is Enabled
+  blockinfile:
+    dest: /etc/httpd/conf.d/ssl.conf
+    insertbefore: "^SSLSessionCacheTimeout"
+    block: |
+      SSLUseStapling On
+      SSLStaplingCache "shmcb:logs/ssl_staple_cache(512000)"
+  tags:
+    - automated
+    - section07.10
+
+# - name: 7.11. Ensure HTTP Strict Transport Security Is Enabled
+#   lineinfile:
+#     path: /etc/httpd/conf.d/ssl.conf
+#     insertafter: "^## SSL Virtual Host Context"
+#     line: 'Header always set Strict-Transport-Security "max-age=600" '
+#   tags:
+#     - automated
+#     - section07.11
+
+- name: 7.12. Ensure Only Cipher Suites That Provide Forward Secrecy Are Enabled
+  shell: cat /etc/httpd/conf.d/ssl.conf | grep "SSLCipherSuite" >> Check/Check_Only_Cipher_Suites_That_Provide_Forward_Secrecy_Are_Enabled.txt
+  tags:
+    - automated
+    - section07.12

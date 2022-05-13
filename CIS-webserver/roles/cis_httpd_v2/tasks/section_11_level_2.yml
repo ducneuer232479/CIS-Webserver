@@ -1,0 +1,24 @@
+---
+- name: 11.1. Ensure SELinux Is Enabled in Enforcing Mode
+  shell: sestatus >> Check/Check_SELinux_Is_Enabled_in_Enforcing_Mode.txt
+  tags:
+    - automated
+    - section11.1
+
+- name: 11.2. Ensure Apache Processes Run in the httpd_t Confined Context
+  shell: ps -eZ | grep httpd >> Check/Check_Apache_Processes_Run_in_the_httpd_t_Confined_Context.txt
+  tags:
+    - automated
+    - section11.2
+
+# - name: 11.3. Ensure the httpd_t Type is Not in Permissive Mode
+#   shell:  semodule -l | grep permissive_httpd_t >> Check/Check_the_httpd_t_Type_is_Not_in_Permissive_Mode.txt
+#   tags:
+#     - automated
+#     - section11.3
+
+- name: 11.4 Ensure Only the Necessary SELinux Booleans are Enabled
+  shell: sh CIS-Script/Script_Check_Only_the_Necessary_SELinux_Booleans_are_Enabled.sh
+  tags:
+    - automated
+    - section11.4

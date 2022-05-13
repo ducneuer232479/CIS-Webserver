@@ -1,0 +1,7 @@
+---
+# Restart service
+- name: Ensure service enabled and started
+  service:
+    name: httpd
+    state: restarted
+    enabled: True

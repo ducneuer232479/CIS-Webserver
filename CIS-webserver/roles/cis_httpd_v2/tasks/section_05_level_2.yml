@@ -1,0 +1,32 @@
+---
+# - name: 5.11. Ensure Access to Inappropriate File Extensions Is Restricted
+#   shell: sh CIS-Script/Script_Access_to_Inappropriate_File_Extensions_Is_Restricted.sh
+#   tags:
+#     - automated
+#     - section05.11
+
+# - name: 5.12. Ensure IP Address Based Requests Are Disallowed
+#   blockinfile: 
+#     path: /var/www/html/.htaccess
+#     insertafter:  "^RewriteRule . /index.php [L]"
+#     block: |
+#       RewriteCond %{HTTP_HOST} ^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$
+#       RewriteRule (.*) http://thangblog247.tk/$1 [R=301,L]
+#   tags:
+#     - automated
+#     - section05.12
+
+- name: 5.13 Ensure the IP Addresses for Listening for Requests Are Specified
+  shell:  echo "Add IP Manual With Listening Specified" >> Check/Check_the_IP_Addresses_for_Listening_for_Requests_Are_Specified.txt
+  tags:
+    - automated
+    - section05.13
+
+- name: 5.14 Ensure Browser Framing Is Restricted
+  #shell: echo "Header always append X-Frame-Options: 'Content-Security-Policy frame-ancestors self' " >> /etc/httpd/conf/httpd.conf
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: "Header always append X-Frame-Options SAMEORIGIN "
+  tags:
+    - automated
+    - section05.14

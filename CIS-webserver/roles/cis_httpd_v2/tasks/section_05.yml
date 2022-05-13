@@ -1,0 +1,12 @@
+---
+# 5. Minimize Features, Content and Options
+#
+- include: section_05_level_1_and_2.yml
+  tags:
+    - section05
+    - level_1_and_2
+
+- include: section_05_level_2.yml
+  tags:
+    - section05
+    - level_2

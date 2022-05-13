@@ -1,0 +1,14 @@
+---
+- name: 12.1-12.3. Ensure the AppArmor Framework Is Enabled, Ensure the Apache AppArmor Profile Is Configured Properly and Ensure Apache AppArmor Profile is in Enforce Mode
+  shell: echo "AppArmor is install ubuntu can not install Centos 6 or lastest" >> Check/Check_the_AppArmor_Framework_Is_Enabled.txt
+  tags:
+    - automated
+    - manual
+    - section12.1
+    - section12.2
+    - section12.3
+
+- name: Restart service
+  service:
+    name: httpd
+    state: restarted

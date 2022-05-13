@@ -1,0 +1,24 @@
+---
+- name: 6.1. Ensure the Error Log Filename and Severity Level Are Configured Correctly
+  shell: grep "LogLevel\|ErrorLog" {{ apache_conf_dir }}/conf/httpd.conf >> Check/Check_the_Error_Log_Filename_and_Severity_Level_Are_Configured_Correctly.txt
+  tags:
+    - automated
+    - section06.1
+
+- name: 6.3. Ensure the Server Access Log Is Configured Correctly 
+  shell: grep "LogFormat" {{ apache_conf_dir }}/conf/httpd.conf >> Check/Check_the_Server_Access_Log_Is_Configured_Correctly.txt
+  tags:
+    - automated
+    - section06.3
+
+- name: 6.4. Ensure Log Storage and Rotation Is Configured Correctly
+  include: s_automated6_4.yml
+  tags:
+    - automated
+    - section06.4
+
+- name: 6.5. Ensure Applicable Patches Are Applied
+  shell: echo "Manual Check Required" >> Check/Check_ensure_Applicable_Patches_Are_Applied.txt
+  tags:
+    - automated
+    - section06.5

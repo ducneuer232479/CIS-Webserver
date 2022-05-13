@@ -1,0 +1,11 @@
+---
+- name: 8.3 Ensure All Default Apache Content Is Removed
+  shell: echo "All Default Apache Content Is Removed" >> Check/Check_All_Default_Apache_Content_Is_Removed.txt
+  tags:
+    - automated
+    - section08.3
+# - name: 8.4 Ensure ETag Response Header Fields Do Not Include Inodes
+#   shell: grep 'FileETag' {{ apache_conf_dir }}/conf/httpd.conf >> Check/Check_ETag_Response_Header_Fields_Do_Not_Include_Inodes.txt
+#   tags:
+#     - automated
+#     - section08.4

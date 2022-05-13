@@ -1,0 +1,7 @@
+---
+# 9. Denial of Service Mitigations
+# 
+- include: section_09_level_1_and_2.yml
+  tags:
+    - section09
+    - level_1_and_2

@@ -1,0 +1,8 @@
+---
+apache_conf_dir: "/etc/httpd"
+certbot_site_names: { client: "vutuanduc.site" }
+
+certbot_package: "certbot"
+certbot_python_package: "python2-certbot-apache"
+certbot_plugin: "apache"
+certbot_mail_address: "vutuanducpro5@gmail.com"

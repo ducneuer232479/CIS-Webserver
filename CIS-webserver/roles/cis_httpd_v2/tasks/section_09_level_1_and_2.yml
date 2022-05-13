@@ -1,0 +1,55 @@
+---
+- name: 9.1. Ensure the TimeOut Is Set to 10 or Less 
+  blockinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^Group apache"
+    block: |
+      #
+      # Timeout: The number of seconds before receives and sends time out.
+      #
+      Timeout 10
+  tags:
+    - automated
+    - section09.1
+
+- name: 9.2. Ensure KeepAlive Is Enabled
+  blockinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^Timeout 10"
+    block: |
+      #
+      # KeepAlive: Whether or not to allow persistent connections (more than
+      # one request per connection). Set to "Off" to deactivate.
+      #
+      KeepAlive On
+  tags:
+    - automated
+    - section09.2
+
+- name: 9.3. Ensure MaxKeepAliveRequests is Set to a Value of 100 or Greater
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^KeepAlive On"
+    line: 'MaxKeepAliveRequests 100'
+  tags:
+    - automated
+    - section09.3
+
+- name: 9.4. Ensure KeepAliveTimeout is Set to a Value of 15 or Less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^MaxKeepAliveRequests"
+    line: 'KeepAliveTimeout 15'
+  tags:
+    - automated
+    - section09.4
+
+- name: 9.5-9.6. Ensure the Timeout Limits for Request Headers is Set to 40 or Less and Request Body is Set to 20 or Less
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    insertafter: "^KeepAliveTimeout"
+    line: 'RequestReadTimeout header=20-40,MinRate=500 body=20,MinRate=500'  
+  tags:
+    - automated
+    - section09.5
+    - section09.6

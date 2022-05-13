@@ -1,0 +1,49 @@
+---
+# #- name: 7.1-7.2 Ensure mod_ssl and/or mod_nss and a Valid Trusted Certificate Is Installed
+#   include: s_automated7_1_2.yml
+#   tags:
+#     - automated
+#     - section07.1
+#     - section07.2
+
+# - name: 7.3. Ensure the Server's Private Key Is Protected
+#   shell: ls /etc/letsencrypt/ >> Check/Check_the_Servers_Private_Key_Is_Protected.txt
+#   tags:
+#     - automated
+#     - section07.3
+
+- name: 7.4-7.5-7.8. Ensure Weak SSL Protocols Are Disabled
+  lineinfile:
+    path: /etc/httpd/conf.d/vutuanduc.site-le-ssl.conf
+    insertbefore: "^</VirtualHost>"
+    line: |
+      SSLProtocol TLSv1.2
+      SSLHonorCipherOrder On
+      SSLCipherSuite ALL:!EXP:!NULL:!LOW:!SSLv2:!RC4:!aNULL:EECDH:EDH:!NULL:!SSLv2:!RC4:!aNULL:!3DES:!IDEA
+  tags:
+    - automated
+    - section07.4
+    - section07.5
+    - section07.8
+
+- name: 7.6. Ensure Insecure SSL Renegotiation Is Not Enabled
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    line: "SSLInsecureRenegotiation off"
+  tags:
+    - automated
+    - section07.6
+
+- name: 7.7. Ensure SSL Compression is not Enabled
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    line: "SSLCompression off"
+  tags:
+    - automated
+    - section07.7
+
+- name: 7.9. Ensure All Web Content is Accessed via HTTPS
+  shell: sh CIS-Script/Script_Ensure_All_Web_Content_is_Accessed_via_HTTPS.sh
+  tags:
+    - automated
+    - section07.9

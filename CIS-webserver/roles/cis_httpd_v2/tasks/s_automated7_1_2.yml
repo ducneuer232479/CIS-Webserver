@@ -1,0 +1,22 @@
+---
+#- name: Create Virtualhosts
+#  shell: sh CIS-Script/Script_install_ssl_and_Valid_Trusted_Certificate.sh
+
+# - name: Install Python Package
+#   yum: name=python3 update_cache=yes state=latest
+
+# - name: Enable SSL Module
+#   yum: name=mod_ssl state=present
+
+# - name: Install Let's Encrypt Package
+#   yum: name={{ certbot_package }} update_cache=yes state=latest
+
+# - name: Install Python Package Certbot
+#   yum: name={{ certbot_python_package }} state=present
+
+- name: Create and Install Cert Using apache Plugin
+  command: "certbot --apache -d vutuanduc.site -m {{ certbot_mail_address }} --agree-tos --noninteractive --redirect"
+
+- name: Set Letsencrypt Cronjob for Certificate Auto Renewal
+  cron: name=letsencrypt_renewal special_time=monthly job="/usr/bin/certbot renew"
+  when: ansible_facts['os_family'] == "CentOS"

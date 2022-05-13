@@ -1,0 +1,15 @@
+Hướng dẫn sử dụng 
+Lưu ý khi deploy chính sách lên máy chủ ứng dụng web cần lưu ý:
+
+1. Module số 12 cài đặt trên phiên bản ubuntu và centos 5.6 nên nếu bạn chạy bản khác thì module này không cần thiết chạy
+
+2. Lưu ý các thư mục và tên file được thiết lập trong roles, vì từng distro của linux nó sẽ khác nhau
+
+3. Ở phần này mình thực hiện triển khai chính sách trên WordPress nên cần lưu ý module 5 và 6 vì đây là module động ảnh hưởng trực tiếp với việc chạy website, nó sẽ phát sinh lỗi không mong muốn nên khi chạy 2 module này cần thực hiện cẩn thận
+
+4. Quá trình chạy các module sẽ có thực hiện việc tải một thư mục CIS-Script mình tạo để  thực hiện các chương trình kiểm tra hệ thống webserver đáp ứng yêu cầu bảo mật theo CIS Benchmark chưa.
+link: https://github.com/Thang1102/CIS-Script
+
+5. Trong khi hệ thống chạy file shell script trên sẽ có trường hợp báo lỗi sẽ có 2 trường hợp:
+	- File thực hiện thành công nhưng không trả về kết quả
+	- File không thực hiện được do hệ thống phát hiện đây không phải là file bash lúc này sử dụng lệnh:  sed -i -e 's/\r$//' CIS-Script/*.sh trên server trước khi thực hiện chạy lại.

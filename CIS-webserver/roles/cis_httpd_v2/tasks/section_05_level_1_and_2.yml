@@ -1,0 +1,82 @@
+---
+# content level 1 and 2
+# - name: 5.1. Ensure Options for the OS Root Directory Are Restricted
+#   lineinfile:
+#     path: /etc/httpd/conf/httpd.conf
+#     insertafter: "^<Directory />"
+#     line: "Options None"
+#     firstmatch: yes
+#     state: present
+#   tags:
+#     - automated
+#     - section05.1
+
+- name: 5.2. Ensure Options for the Web Root Directory Are Restricted
+  shell: perl -ne 'print if /^ *<Directory */i .. /<\/Directory/i' {{apache_conf_dir}}/conf/httpd.conf | grep "Options" >> Check/Check_Options_for_the_Web_Root_Directory_Are_Restricted.txt
+  tags:
+    - automated
+    - section05.2
+
+- name: 5.3. Ensure Options for Other Directories Are Minimized
+  shell: grep -i -A 12 '<Directory[[:space:]]' {{apache_conf_dir}}/conf/httpd.conf | grep "Options" >> /root/Check/Check_Options_for_Other_Directories_Are_Minimized.txt
+  tags:
+    - automated
+    - section05.3
+
+- name: 5.4. Ensure Default HTML Content Is Removed
+  copy:
+    src: welcome.conf
+    dest: /etc/httpd/conf.d/welcome.conf
+  tags:
+    - automated
+    - section05.4
+
+- name: 5.5-5.6. Ensure the Default CGI Content printenv and Content test-cgi Script Is Removed
+  shell: rm -rf /var/www/html/cgi-bin/*
+  tags:
+    - automated
+    - section05.5
+    - section05.6
+
+# - name: 5.7. Ensure HTTP Request Methods Are Restricted
+#   lineinfile:
+#     path: /etc/httpd/conf/httpd.conf
+#     insertafter: "{{item.regexp}}"
+#     line: "{{item.line}}"
+#   with_items:
+#     - {
+#         regexp: '^<Directory "/var/www/html">',
+#         line: "# Limit HTTP methods to standard methods. Note: Does not limit TRACE \n <LimitExcept GET POST OPTIONS> \n Require all denied \n </LimitExcept> \n",
+#       }
+#     - {
+#         regexp: '^<Directory "/var/www/cgi-bin">',
+#         line: "# Limit HTTP methods \n <LimitExcept GET POST OPTIONS> \n Require all denied \n </LimitExcept> \n",
+#       }
+#   tags:
+#     - automated
+#     - section05.7
+
+- name: 5.8. Ensure the HTTP TRACE Method Is Disabled
+  lineinfile:
+    path: /etc/httpd/conf/httpd.conf
+    line: "TraceEnable Off"
+  tags:
+    - automated
+    - section05.8
+# - name: 5.9. Ensure Old HTTP Protocol Versions Are Disallowed
+#   blockinfile:
+#     path: /var/www/html/.htaccess
+#     insertafter: '^RewriteEngine On'
+#     block: |
+#       RewriteCond %{THE_REQUEST} !HTTP/1\.1$
+#       RewriteOptions Inherit
+#       RewriteRule .* - [F]
+#   tags:
+#     - automated
+#     - section05.9
+
+# - name: 5.10. Ensure Access to .ht* Files Is Restricted
+#   shell: grep -e "^<Files \"\^\\\.ht\">\|Require all denied\|<\/Files>" -n {{apache_conf_dir}}/conf/httpd.conf > Check/Access_to_.ht*_Files_Is_Restricted.txt
+#   tags:
+#     - automated
+#     - section05.10

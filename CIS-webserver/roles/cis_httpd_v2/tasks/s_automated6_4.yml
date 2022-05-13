@@ -1,0 +1,10 @@
+---
+- name: Add or  modify  the web log rotation  configuration
+  copy:
+    src: httpd
+    dest: /etc/logrotate.d/httpd
+
+- name: Modify  the rotation  period  and number
+  copy:
+    src: logrotate.conf
+    dest: /etc/logrotate.conf

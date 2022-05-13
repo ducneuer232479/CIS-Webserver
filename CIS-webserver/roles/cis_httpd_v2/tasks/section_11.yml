@@ -1,0 +1,7 @@
+---
+# 11 Enable SELinux to Restrict Apache Processes
+#
+- include: section_11_level_2.yml
+  tags:
+    - section11
+    - level_2 

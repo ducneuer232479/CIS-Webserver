@@ -1,0 +1,12 @@
+---
+# 6. Operations - Logging, Monitoring and Maintenance
+#
+- include: section_06_level_1_and_2.yml
+  tags:
+    - section06
+    - level_1_and_2
+
+- include: section_06_level_2.yml
+  tags:
+    - section06
+    - level_2

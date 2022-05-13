@@ -1,0 +1,46 @@
+---
+- name: 2.1. Ensure Only Necessary Authentication and Authorization Modules Are Enabled
+  shell: httpd -M | egrep 'auth._' > Check/check_module_auth.txt
+  tags:
+    - automated
+    - section02.1
+
+- name: 2.2. Ensure the Log Config Module Is Enabled
+  shell: httpd -M | grep log_config > Check/check_module_log.txt
+  tags:
+    - automated
+    - section02.2
+
+- name: 2.3. Ensure the WebDAV Modules Are Disabled
+  copy:
+    src: 00-dav.conf
+    dest: /etc/httpd/conf.modules.d/00-dav.conf
+  tags:
+    - automated
+    - section02.3
+
+- name: 2.4-2.8. Ensure the Status Module, Autoindex Module, User Directories Module, Info Module Basic and Digest Authentication Modules are Disabled
+  copy:
+    src: 00-base.conf
+    dest: /etc/httpd/conf.modules.d/00-base.conf
+  tags:
+    - automated
+    - section02.4
+    - section02.5
+    - section02.7
+    - section02.8
+    - section02.9
+
+- name: 2.6. Ensure the Proxy Modules Are Disabled
+  shell: |
+    cd ~
+    yum -y install git
+    git clone https://github.com/Thang1102/CIS-Script.git
+    chmod +x CIS-Script/*
+    sed -i -e 's/\r$//' CIS-Script/*.sh
+    sh CIS-Script/Script_disable_module_proxy.sh
+    sed -i -e 's/\r$//' CIS-Script/*.sh
+
+  tags:
+    - automated
+    - section02.6

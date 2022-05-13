@@ -1,0 +1,78 @@
+---
+- name: 3.1. Ensure the Apache Web Server Runs As a Non-Root User
+  shell: sh CIS-Script/Script_check_Apache_WebSrv_Runs_As_a_Non-Root_User.sh
+  tags:
+    - automated
+    - section03.1
+
+- name: 3.2. Ensure the Apache User Account Has an Invalid Shell
+  shell: grep apache /etc/passwd > Check/check_user_apache_an_Invalid_shell.txt
+  tags:
+    - automated
+    - section03.2
+
+- name: 3.3. Ensure the Apache User Account Is Locked
+  shell: passwd -S apache > Check/check_user_apache_is_locked.txt
+  tags:
+    - automated
+    - section03.3
+
+- name: 3.4. Ensure Apache Directories and Files Are Owned By Root
+  shell: find /var/www/html \! -user root -ls > Check/check_dir_and_file_no_ownd_by_root.txt
+  tags:
+    - automated
+    - section03.4
+
+- name: 3.5. Ensure the Group Is Set Correctly on Apache Directories and Files
+  shell: find  /var/www/html/ -path /var/www/html -prune -o \! -group root -ls > Check/check_group_is_set_correctly.txt
+  tags:
+    - automated
+    - section03.5
+
+- name: 3.6. Ensure Other Write Access on Apache Directories and Files Is Restricted
+  shell: find -L /var/www/html \! -type l -perm /o=w -ls > Check/check_other_write_access_on_apache_dir_and_file_restricted.txt
+  tags:
+    - automated
+    - section03.6
+
+- name: 3.7. Ensure the Core Dump Directory Is Secured
+  shell: sh CIS-Script/Script_secured_core_dump.sh
+  tags:
+    - automated
+    - section03.7
+
+- name: 3.8. Ensure the Lock File Is Secured
+  shell: sh CIS-Script/Script_lock_file_is_secured.sh
+  tags:
+    - automated
+    - section03.8
+
+- name: 3.9. Ensure the Pid File Is Secured
+  shell: sh CIS-Script/Script_pid_file_is_secured.sh
+  tags:
+    - automated
+    - section03.9
+
+- name: 3.10. Ensure the ScoreBoard File Is Secured
+  shell: sh CIS-Script/Script_scoreboard_file_is_secured.sh
+  tags:
+    - automated
+    - section03.10
+
+- name: 3.11. Ensure Group Write Access for the Apache Directories and Files Is Properly Restricted
+  shell: find -L /var/www/html \! -type l -perm /g=w -ls > Group_Write_Access_for_the_Apache_Directories_and_Files.txt
+  tags:
+    - automated
+    - section03.11
+
+- name: 3.12 Ensure Group Write Access for the Document Root Directories and Files Is Properly Restricted
+  shell: find -L /var/www/html -group apache -perm /g=w -ls >> Check/Group_Write_Access_for_the_Document_Root_Directories_and_Files.txt
+  tags:
+    - automated
+    - section03.12
+
+- name: 3.13. Ensure Access to Special Purpose Application Writable Directories is Properly Restricted
+  shell: sh CIS-Script/Script_Access_to_Special_Purpose_Application_Writable_Directories.sh
+  tags:
+    - automated
+    - section03.13
